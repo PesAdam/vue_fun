@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>VUEEE</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li class="dude" v-for="dude in characters">
+                
+                <a class="ctrl" @click.prevent="remove(dude)">x</a>
+                
+                <article :class="{ faded:dude.cool < 10, gold: dude.cool > 100}">
+                    {{dude.who}}
+                    
+                    <span>
+                        {{dude.what}}
+                    </span>
+                
+                </article>
+
+                <input class="ctrl" type="number" v-model.number="dude.cool">
+            </li>
+        </ul>        
+
+        <form class="add-new" @keydown.enter="add">
+            <input type="tex0t" v-model="newWho">
+            <input type="text" v-model="newWhat">
+        </form>
+    
+        <p class="preview">
+            {{ newWho }} <br>
+            <small>
+                {{newWhat}}
+            </small>
+        </p>
+    
+    </div>
+
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                newWho: '',
+                newWhat: '',
+                characters:[{
+                    "who": "Adamko Belko",
+                    "what": "Je to krasny chlapec plny pozitivnej energie, lasky a pokoja.",
+                    "cool": 99,
+                }, {
+                    "who": "Jakubik Jakub",
+                    "what": "Proste je to jakubik ani neviem preco som prehodil meno s priezviskom, fuck. Nevadi.",
+                    "cool": -48
+                }, {
+                    "who": "Filip SUSTIHLAV",
+                    "what": "filip je programator na plny uvazok a nie ze nie.",
+                    "cool": 70
+                }],
+            },
+            methods:{
+                add(){
+                    this.characters.push({
+                        who: this.newWho,
+                        what: this.newWhat,
+                        cool: 10
+                    })
+                },
+                remove(dude){
+                    this.characters = this.characters.filter( item => item !== dude)
+                }
+            }
+        })
+
+    </script>
+
+</body>
+</html>
